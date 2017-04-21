@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,6 +35,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText passView;
     private EditText userView;
     private String name,surname,username,email,password;
+    private static final String TAG = RegistrationActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,22 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
 
         nameView = (EditText) findViewById(R.id.name);
         surnameView = (EditText) findViewById(R.id.surname);
@@ -64,7 +82,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 email = emailView.getText().toString();
                 password = passView.getText().toString();
 
-                final Button newUser = (Button) findViewById(R.id.email_sign_in_button);
+                Button newUser = (Button) findViewById(R.id.email_register_button);
 
                 newUser.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -78,32 +96,45 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
 
-            public void createAccount() {
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
+    public void createAccount() {
 
-                                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                                DatabaseReference myRef = database.getReference("users");
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                                DatabaseReference ref = myRef.child(username);
-                                ref.child("Name").setValue(name);
-                                ref.child("Surname").setValue(surname);
-                                ref.child("Email").setValue(email);
-                                ref.child("Password").setValue(password);
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "createUserWithEmail:success");
 
-                                if (task.isSuccessful()) {
-                                    mainActivityCall();
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference myRef = database.getReference("users");
 
-                                }
+                            DatabaseReference ref = myRef.child(username);
+                            ref.child("Name").setValue(name);
+                            ref.child("Surname").setValue(surname);
+                            ref.child("Email").setValue(email);
+                            ref.child("Password").setValue(password);
+                            Toast.makeText(RegistrationActivity.this, "Added "+name+ " "+ surname,
+                                    Toast.LENGTH_SHORT).show();
+                            mainActivityCall();
 
-                            }
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
 
 
-                        });
-            }
+                });
+    }
+
+
 
 
     public void mainActivityCall(){
