@@ -16,10 +16,17 @@
     <string name="auth_failed">Error in authentication</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="group_section">Group</string>
+    <string name="group_section">Groups Section</string>
     <string name="personal_section">Personal Section</string>
     <string name="title_notifications">Notifications</string>
     <string name="prompt_name">Type your name</string>
     <string name="prompt_surname">Type your surname</string>
     <string name="prompt_username">Type your username</string>
+    <string name="title_activity_new_group">NewGroupActivity</string>
+
+    <string name="Name">Name</string>
+    <string name="Description">Description</string>
+    <string name="Import">Import</string>
+    <string name="Author">Author</string>
+    <string name="create_group">Create Group</string>
 </resources>
