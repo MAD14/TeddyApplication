@@ -13,9 +13,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="auth_failed">Error in authentication</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="group_section">Group</string>
     <string name="personal_section">Personal Section</string>
     <string name="title_notifications">Notifications</string>
+    <string name="prompt_name">Type your name</string>
+    <string name="prompt_surname">Type your surname</string>
+    <string name="prompt_username">Type your username</string>
 </resources>
