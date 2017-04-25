@@ -30,6 +30,10 @@
         <activity
             android:name=".NewGroupActivity"
             android:label="@string/title_activity_new_group"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChoiceGroupMembersActivity"
+            android:label="@string/title_activity_choice_group_members"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

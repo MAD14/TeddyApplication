@@ -38,7 +38,7 @@
                 android:layout_marginBottom="10dp"
                 />
 
-            <EditText android:id="@+id/group_author"
+            <!--<EditText android:id="@+id/group_author"
                 android:hint="@string/Author"
                 android:inputType="text"
                 android:textSize="20dp"
@@ -50,7 +50,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_below="@id/image"
                 >
-            </EditText>
+            </EditText>-->
 
             <EditText android:id="@+id/group_name"
                 android:hint="@string/Name"
@@ -61,7 +61,8 @@
                 android:layout_marginLeft="@dimen/margin"
                 android:layout_marginRight="@dimen/margin"
                 android:layout_marginBottom="20dp"
-                android:layout_below="@+id/group_author">
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/image">
             </EditText>
 
             <EditText android:id="@+id/group_description"
@@ -84,6 +85,7 @@
                 android:text="Insert an image"
                 android:textSize="15sp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="30dp"
                 android:layout_below="@id/group_description"/>
 
             <ImageView
