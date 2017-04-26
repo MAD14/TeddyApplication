@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity(intent);
         } else {
             // Signed out, show unauthenticated UI.
-            //updateUI(false);
+
         }
     }
 //ED

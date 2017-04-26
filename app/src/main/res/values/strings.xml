@@ -5,7 +5,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
-    <string name="action_register">Register now</string>
+    <string name="action_register">If you are not registered yet, REGISTER NOW</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -18,15 +18,30 @@
     <string name="title_home">Home</string>
     <string name="group_section">Groups Section</string>
     <string name="personal_section">Personal Section</string>
+    <string name="expenses_section">Expenses</string>
+    <string name="summary_section">Summary</string>
     <string name="title_notifications">Notifications</string>
     <string name="prompt_name">Type your name</string>
     <string name="prompt_surname">Type your surname</string>
     <string name="prompt_username">Type your username</string>
-    <string name="title_activity_new_group">NewGroupActivity</string>
-
+    <string name="title_activity_new_group">New Group</string>
+    <string name="title_expense_creation">New Expense</string>
     <string name="Name">Name</string>
     <string name="Description">Description</string>
     <string name="Import">Import</string>
     <string name="Author">Author</string>
     <string name="create_group">Create Group</string>
+    <string name="title_activity_group">GroupActivity</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_activity_choice_group_members">Add members</string>
+    <string name="invite_user">Invite</string>
+    <string name="search">Search</string>
+
+
+    <!-- ??????????
+    <string name="invitation_title">Send TeddyApp Invite</string>
+    <string name="invitation_message">This app is terrific, download it!</string>
+    <string name="invitation_deep_link">http://example.com/TeddyApplication/Download</string>
+    <string name="invitation_custom_image">https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png</string>
+    <string name="invitation_cta">Install!</string>-->
 </resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_person"
+            android:layout_width="@dimen/icon_dimension"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/person_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/expense_description"
+            android:paddingTop="10dp"
+
+            />
+
+        <TextView
+            android:id="@+id/summary_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:elegantTextHeight="true"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:textAppearance="@color/colorPrimary"
+            android:textSize="25sp"
+            />
+
+        <TextView
+            android:id="@+id/summary_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:elegantTextHeight="true"
+            android:paddingTop="15dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/red"
+            android:textSize="20sp" />
+
+
+</LinearLayout>
