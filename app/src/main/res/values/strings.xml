@@ -31,6 +31,7 @@
     <string name="Import">Import</string>
     <string name="Author">Author</string>
     <string name="create_group">Create Group</string>
+<<<<<<< HEAD
     <string name="title_activity_group">GroupActivity</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_activity_choice_group_members">Add members</string>
@@ -40,6 +41,13 @@
 
     <!-- ??????????
     <string name="invitation_title">Send TeddyApp Invite</string>
+=======
+    <string name="title_activity_choice_group_members">ChoiceGroupMembersActivity</string>
+    <string name="invite_user">Invite</string>
+    <string name="search">Search</string>
+
+    <!--<string name="invitation_title">Send TeddyApp Invite</string>
+>>>>>>> origin/master
     <string name="invitation_message">This app is terrific, download it!</string>
     <string name="invitation_deep_link">http://example.com/TeddyApplication/Download</string>
     <string name="invitation_custom_image">https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png</string>
