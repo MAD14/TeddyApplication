@@ -32,18 +32,15 @@
             android:label="@string/title_activity_new_group"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-<<<<<<< HEAD
             android:name=".GroupActivity"
-            android:label="@string/title_activity_group"></activity>
+            android:label="@string/title_activity_group"/>
         <activity
             android:name=".ExpenseCreation"
-            android:label="@string/title_expense_creation"></activity>
+            android:label="@string/title_expense_creation"/>
         <activity
-=======
->>>>>>> origin/master
             android:name=".ChoiceGroupMembersActivity"
             android:label="@string/title_activity_choice_group_members"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

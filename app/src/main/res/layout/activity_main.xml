@@ -13,22 +13,11 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-<<<<<<< HEAD
     <ListView
         android:id="@+id/list_view_main_activity"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         />
-=======
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/title_home" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
@@ -39,18 +28,6 @@
             app:srcCompat="@android:drawable/ic_input_add"
             android:clickable="true"
             android:onClick="onClick"/>
->>>>>>> origin/master
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
-        app:elevation="0dp"
-        app:srcCompat="@mipmap/add_icon"
-        />
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView

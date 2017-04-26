@@ -1,13 +1,11 @@
 package it.polito.teddyapplication;
 
-<<<<<<< HEAD
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-=======
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,18 +24,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
->>>>>>> origin/master
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-import it.polito.teddyapplication.R;
-
->>>>>>> origin/master
 public class ChoiceGroupMembersActivity extends AppCompatActivity {
 
     Button inviteUser;
