@@ -1,24 +1,19 @@
 package it.polito.teddyapplication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.List;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -143,10 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view){
         Intent intent = new Intent(view.getContext(),GroupActivity.class);
         startActivity(intent);
-        //TODO: come si passa la view che è stata cliccata?
     }
-    /*public void onClickGroup(View v){
-        Intent intent = new Intent(getBaseContext(),GroupActivity.class);
+    //TODO: logout temporaneo!!!!
+    public void logOut(View view){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(view.getContext(),LoginActivity.class);
         startActivity(intent);
-    }*/
+    }
 }

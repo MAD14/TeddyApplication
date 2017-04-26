@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChoiceGroupMembersActivity extends AppCompatActivity {
 
@@ -77,12 +79,12 @@ public class ChoiceGroupMembersActivity extends AppCompatActivity {
                 });
     }
 
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        if (email.contains("@") && !email.matches("\\s+")){
-            return true;
-        } else
-            return false;
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        return matcher.find();
     }
 
 

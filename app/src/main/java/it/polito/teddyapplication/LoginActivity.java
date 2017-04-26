@@ -40,12 +40,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -55,13 +59,13 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
 
-    public static String[] DUMMY_CREDENTIALS = {"elena93@gmail.com"};
+    public static String[] DUMMY_CREDENTIALS = {""};
 
     //ED
     public static final int RC_SIGN_IN = 10;
     private GoogleApiClient mGoogleApiClient;
     private GoogleSignInAccount acct;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     //ED
     /**
@@ -80,9 +84,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // before setting the view
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
         setContentView(R.layout.activity_login);
 
 
@@ -130,10 +143,38 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }).addApi(Auth.GOOGLE_SIGN_IN_API,gso).build();
 
-        findViewById(R.id.sign_in_button).setOnClickListener(new OnClickListener() {
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
+
+        findViewById(R.id.email_sign_in_button).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+                //signIn();
+                String email = mEmailView.getText().toString();
+                final String password = mPasswordView.getText().toString();
+                mProgressView.setVisibility(View.VISIBLE);
+
+                //authenticate user
+                auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                mProgressView.setVisibility(View.GONE);
+                                if (!task.isSuccessful()) {
+                                    // there was an error
+                                    EditText et = (EditText)findViewById(R.id.email);
+                                    et.setText("ciuccia");
+                                    Toast.makeText(LoginActivity.this, getString(R.string.auth_failed), Toast.LENGTH_LONG).show();
+                                } else {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        });
             }
         });
 
@@ -143,6 +184,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 register();
             }
         });
+
+        findViewById(R.id.sign_in_button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+            }
+        });
+
         //ED
     }
 
@@ -153,7 +202,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 
-    // da qui fino alla fine della sezione che ho modificato io è roba che funge presa dal tutorial :)
+    //
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
+        final GoogleSignInAccount acct = account;
+        auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                            intent.putExtra("email",acct.getEmail());
+                            startActivity(intent);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
+    }
+
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -174,12 +248,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             acct = result.getSignInAccount();
-            Intent intent = new Intent(this,MainActivity.class);
-            intent.putExtra("email",acct.getEmail());
-            startActivity(intent);
+            firebaseAuthWithGoogle(acct);
         } else {
             // Signed out, show unauthenticated UI.
-
+//            TODO: show a message that the sign in has not concluded successfully
         }
     }
 //ED
@@ -280,14 +352,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        return matcher.find();
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 6;
     }
 
     /**
@@ -409,11 +484,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(intent);
                     return pieces[1].equals(mPassword);
                 }
             }
 
             // TODO: register the new account here.
+//            Intent intent = new Intent(getApplicationContext(),RegistrationActivity.class);
+//            intent.putExtra("emailRequested",mEmail);
+//            startActivity(intent);
             return true;
         }
 
@@ -423,9 +503,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                // questo intent funziona, però accede alla mainActivity senza accedere alla sezione dei dati dell'utente specifico
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+                //
             } else {
                 //
             }

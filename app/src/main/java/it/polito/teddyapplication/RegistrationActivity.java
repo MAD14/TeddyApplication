@@ -42,6 +42,9 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        Intent intent = getIntent();
+        String emailRequested = intent.getStringExtra("emailRequested");
+
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -64,6 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
         surnameView = (EditText) findViewById(R.id.surname);
         userView = (EditText) findViewById(R.id.username);
         emailView = (EditText) findViewById(R.id.email);
+        emailView.setText(emailRequested);
         passView = (EditText) findViewById(R.id.password);
 
 

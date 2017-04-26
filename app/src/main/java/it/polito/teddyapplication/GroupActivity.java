@@ -114,7 +114,7 @@ public class GroupActivity extends AppCompatActivity {
 
                 list.invalidate();
 
-                //questa assegnazione è da mettere di nuovo?? TODO
+                //questa assegnazione commentata è da mettere di nuovo?? TODO
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //                fab.setOnClickListener(new View.OnClickListener() {
 //                    @Override
