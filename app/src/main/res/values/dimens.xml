@@ -4,11 +4,12 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">0dp</dimen>
-    <dimen name="margin">8dp</dimen>
+    <dimen name="margin">10dp</dimen>
     <dimen name="icon_dimension">35dp</dimen>
     <dimen name="icon_dimension_group">60dp</dimen>
     <dimen name="main_text">20sp</dimen>
     <dimen name="description">12sp</dimen>
+    <dimen name="summary">20sp</dimen>
 
 
 </resources>

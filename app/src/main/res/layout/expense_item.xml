@@ -10,13 +10,16 @@
 
     <ImageView
         android:id="@+id/expense_icon"
-        android:layout_width="@dimen/icon_dimension"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/icon_dimension_group"
+        android:layout_height="@dimen/icon_dimension_group"
         android:src="@mipmap/expense_icon"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/expense_description"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
          />
 
     <TextView
@@ -27,8 +30,7 @@
         android:textColor="@color/writing"
         android:elegantTextHeight="true"
         android:layout_toRightOf="@+id/expense_icon"
-        android:text="Expense Name"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="@dimen/margin"/>
 
     <TextView
         android:id="@+id/expense_description"
@@ -36,11 +38,10 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/description"
         android:elegantTextHeight="true"
-        android:text="Group Description"
         android:layout_below="@+id/expense_name"
         android:layout_toRightOf="@+id/expense_icon"
         android:layout_toEndOf="@+id/expense_icon"
-        android:layout_marginTop="0dp"/>
+        android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/expense_import"
@@ -48,11 +49,12 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:elegantTextHeight="true"
-        android:layout_alignTop="@+id/group_name"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignTop="@+id/expense_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginTop="@dimen/margin"
         android:textColor="@color/red"
         android:textAlignment="center"
         android:gravity="center"
@@ -65,7 +67,10 @@
         android:background="@mipmap/chat_icon"
         android:layout_below="@+id/expense_name"
         android:layout_alignRight="@+id/expense_import"
-        android:layout_alignEnd="@+id/expense_import" />
+        android:layout_alignEnd="@+id/expense_import"
+        android:layout_toEndOf="@id/expense_import"
+        android:layout_toRightOf="@id/expense_import"
+        android:layout_marginTop="@dimen/margin" />
 
 
 </RelativeLayout>

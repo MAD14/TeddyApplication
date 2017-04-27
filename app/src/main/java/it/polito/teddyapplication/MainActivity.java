@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 TextView tv = (TextView) convertView.findViewById(R.id.group_name);
                 tv.setText(groups[position]);
-                tv = (TextView) convertView.findViewById(R.id.group_description);
-                tv.setText("Description");
                 tv = (TextView) convertView.findViewById(R.id.group_summary1);
                 tv.setText("+" + String.valueOf(position));
                 tv = (TextView) convertView.findViewById(R.id.group_summary2);
