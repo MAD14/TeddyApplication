@@ -25,7 +25,7 @@
     <string name="prompt_name">Type your name</string>
     <string name="prompt_surname">Type your surname</string>
     <string name="prompt_username">Type your username</string>
-    <string name="title_activity_new_group">New Group</string>
+    <string name="title_activity_new_group">Add members to your group (1of3)</string>
     <string name="title_expense_creation">New Expense</string>
     <string name="Name">Name</string>
     <string name="Description">Description</string>
@@ -37,12 +37,9 @@
     <string name="title_activity_choice_group_members">Add members</string>
     <string name="invite_user">Invite</string>
     <string name="search">Search</string>
-
-
-    <!-- ??????????
-    <string name="invitation_title">Send TeddyApp Invite</string>
-    <string name="title_activity_choice_group_members">ChoiceGroupMembersActivity</string>
-    <string name="invite_user">Invite</string>
-    <string name="search">Search</string>-->
+    <string name="title_activity_add_members_to_group">Add members to your group (2of3)</string>
+    <string name="add_from_friend">Add members from your friends</string>
+    <string name="title_activity_invite_users_to_group">Invite to TA (3of3)</string>
+    <string name="no_network_connection">Check your connection</string>
 
 </resources>

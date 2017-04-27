@@ -38,7 +38,8 @@ public class NewGroupActivity extends AppCompatActivity {
                         GroupName = EditName.getText().toString();
                         if (EditIsAlphanumeric(GroupName)) {
                             GroupDescription = EditDescription.getText().toString();
-                            Intent intent = new Intent(NewGroupActivity.this, ChoiceGroupMembersActivity.class);
+                            //TODO: aggiunta sul db
+                            Intent intent = new Intent(NewGroupActivity.this, AddMembersToGroupActivity.class);
                             intent.putExtra("groupname", GroupName);
                             intent.putExtra("groupdescription", GroupDescription);
                             startActivity(intent);

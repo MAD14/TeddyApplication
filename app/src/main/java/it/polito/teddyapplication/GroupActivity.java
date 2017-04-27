@@ -113,17 +113,9 @@ public class GroupActivity extends AppCompatActivity {
                 }
 
                 list.invalidate();
+                list.requestLayout();
 
-                //questa assegnazione commentata è da mettere di nuovo?? TODO
                 FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//                fab.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent intent = new Intent(view.getContext(), ExpenseCreation.class);
-//                        intent.putExtra("groupname",groupname);
-//                        startActivityForResult(intent, 1);
-//                    }
-//                });
                 fab.show();
             }
 
