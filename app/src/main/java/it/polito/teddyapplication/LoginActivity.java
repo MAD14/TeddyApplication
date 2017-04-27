@@ -67,6 +67,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private GoogleSignInAccount acct;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private String email;
+    private String password;
+
+    private static final String TAG = LoginActivity.class.getName();
     //ED
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -314,8 +318,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        email = mEmailView.getText().toString();
+        password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -345,9 +349,30 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                            // If sign in fails, display a message to the user. If sign in succeeds
+                            // the auth state listener will be notified and logic to handle the
+                            // signed in user can be handled in the listener.
+                            if (!task.isSuccessful()) {
+                                Log.w(TAG, "signInWithEmail:failed", task.getException());
+                                Toast.makeText(LoginActivity.this, R.string.auth_failed,
+                                        Toast.LENGTH_SHORT).show();
+                            }else {
+
+                                showProgress(true);
+                                mAuthTask = new UserLoginTask(email, password);
+                                mAuthTask.execute((Void) null);
+
+
+
+                            }
+                        }
+                    });
 
         }
     }
