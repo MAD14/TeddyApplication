@@ -24,6 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Federico on 20/04/2017.
  */
@@ -40,7 +43,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private String name,surname,username,email,password;
     private static final String TAG = RegistrationActivity.class.getName();
     private boolean find;
-//    private View mProgressView;
+
+    private View mProgressView;
+    private View focusView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +80,7 @@ public class RegistrationActivity extends AppCompatActivity {
         emailView.setText(emailRequested);
         passView = (EditText) findViewById(R.id.password);
 
-//        mProgressView.findViewById(R.id.login_progress_registration);
+        mProgressView.findViewById(R.id.login_progress_registration);
 
         final Button mEmailRegisterButton = (Button) findViewById(R.id.email_register_button);
         mEmailRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -84,22 +89,16 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 name = nameView.getText().toString();
                 surname = surnameView.getText().toString();
-
                 username = userView.getText().toString();
-
                 email = emailView.getText().toString();
                 password = passView.getText().toString();
 
-                Button newUser = (Button) findViewById(R.id.email_register_button);
-//                mProgressView.setVisibility(View.VISIBLE);
-                createAccount();
-
-//                newUser.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-////
-//                    }
-//                });
+                if(checkDataForRegistration()){
+                    focusView.requestFocus();
+                } else {
+                    mProgressView.setVisibility(View.VISIBLE);
+                    createAccount();
+                }
 
             }
         });
@@ -121,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference myRef = database.getReference("users");
 
-                            if(checkUserName()) {
+                            if(checkUserName(myRef)) {
                                 DatabaseReference ref = myRef.child(username);
                                 ref.child("Name").setValue(name);
                                 ref.child("Surname").setValue(surname);
@@ -156,34 +155,74 @@ public class RegistrationActivity extends AppCompatActivity {
                 });
     }
 
-    public boolean checkUserName() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
-        find=false;
-        myRef.addValueEventListener (new ValueEventListener() {
+    public boolean checkUserName(DatabaseReference ref) {
+
+        find = false;
+        /** addListenerForSingleValueEvent ci mette del tempo ad accedere al database, quindi la prima
+         * volta che checkUserName viene chiamata è imposibile che ritorni un valore diverso da quello settato
+         * di default nella riga precedente a questo commento
+         */
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (username == data.getKey()) {
-                        find=true;
+                    if (username==data.getKey()) {
+                        find = true;
                     }
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError error) {
                 Log.w("Failed to read value.", error.toException());
                 Toast.makeText(RegistrationActivity.this, "Failed to read value from DB!.",
                         Toast.LENGTH_SHORT).show();
-
-
             }
 
         });
         return find;
     }
 
+    public boolean checkDataForRegistration() {
 
+        boolean check = false;
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()){
+            if (password.isEmpty()) {
+                passView.setError(getString(R.string.error_field_required));
+                focusView = passView;
+            }
+            if (email.isEmpty()) {
+                emailView.setError(getString(R.string.error_field_required));
+                focusView = emailView;
+            }
+            if (username.isEmpty()) {
+                userView.setError(getString(R.string.error_field_required));
+                focusView = userView;
+            }
+            check = true;
+        } else if (!isEmailValid(email)){
+            emailView.setError(getString(R.string.error_invalid_email));
+            focusView = emailView;
+            check = true;
+        } else if (!isPasswordValid(password)) {
+            passView.setError(getString(R.string.error_invalid_password));
+            focusView = passView;
+            check = true;
+        }
+        return check;
+    }
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
+    private boolean isEmailValid(String email) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        return matcher.find();
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 6;
+    }
 
     public void mainActivityCall(){
         Intent intent = new Intent(this,MainActivity.class);
