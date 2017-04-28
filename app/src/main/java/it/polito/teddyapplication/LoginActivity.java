@@ -70,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String email;
-    private String password;
 
     private static final String TAG = LoginActivity.class.getName();
     //ED
@@ -98,8 +97,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // before setting the view
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+
+
         if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
+            // TODO qua non viene passato nessuna email!!!!
+            intent.putExtra("email",auth.getCurrentUser().getEmail());
             finish();
         }
 
@@ -140,7 +143,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 boolean cancel = false;
                 View focusView = null;
                 //signIn();
-                String email = mEmailView.getText().toString();
+                email = mEmailView.getText().toString();
                 final String password = mPasswordView.getText().toString();
                 if (email.isEmpty() && password.isEmpty()){
                     mEmailView.setError(getString(R.string.error_field_required));
@@ -185,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 }
                             } else {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                intent.putExtra("email",email);
                                 startActivity(intent);
                                 finish();
                             }
@@ -225,13 +229,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         final GoogleSignInAccount acct = account;
+        email=acct.getEmail();
         auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                    intent.putExtra("email",acct.getEmail());
+                    intent.putExtra("email",email);
                     startActivity(intent);
                 } else {
                     // If sign in fails, display a message to the user.
@@ -247,6 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        signInIntent.putExtra("email",email);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -269,6 +275,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Signed out, show unauthenticated UI.
 //            TODO: show a message that the sign in has not concluded successfully
+                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 //ED
@@ -278,6 +286,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return;
         }
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            auth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     private boolean mayRequestContacts() {
@@ -448,6 +470,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("email",mEmail);
                     startActivity(intent);
                     return pieces[1].equals(mPassword);
                 }
