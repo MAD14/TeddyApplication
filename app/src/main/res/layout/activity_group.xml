@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:context="it.polito.teddyapplication.GroupActivity">
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/backgroundDark"
+        app:menu="@menu/navigation_group"
+        style="@style/NavDrawerTextStyle"/>
+
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -31,13 +40,5 @@
             />
 
     </FrameLayout>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation_group" />
 
 </LinearLayout>

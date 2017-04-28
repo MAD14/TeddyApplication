@@ -40,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String name,surname,username,email,password;
     private static final String TAG = RegistrationActivity.class.getName();
     private boolean find;
+//    private View mProgressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
         emailView.setText(emailRequested);
         passView = (EditText) findViewById(R.id.password);
 
+//        mProgressView.findViewById(R.id.login_progress_registration);
 
         final Button mEmailRegisterButton = (Button) findViewById(R.id.email_register_button);
         mEmailRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -89,14 +91,16 @@ public class RegistrationActivity extends AppCompatActivity {
                 password = passView.getText().toString();
 
                 Button newUser = (Button) findViewById(R.id.email_register_button);
+//                mProgressView.setVisibility(View.VISIBLE);
+                createAccount();
 
-                newUser.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        createAccount();
+//                newUser.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+////
+//                    }
+//                });
 
-                    }
-                });
             }
         });
     }
@@ -109,7 +113,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
+//                        mProgressView.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
@@ -128,11 +132,14 @@ public class RegistrationActivity extends AppCompatActivity {
                                 mainActivityCall();
                             }
                             else{
+
+                                //TODO: new activity con richiesta nuovo username fino a quando non ce n'è uno disponibile
+                                //con ActivityOnResult() che completa l'inserimento
                                 Log.w(TAG, "createUserWithEmail:failure->username already in use", task.getException());
                                 Toast.makeText(RegistrationActivity.this, "Authentication failed: username already in use! Please select another one",
                                         Toast.LENGTH_SHORT).show();
 
-
+                                //TODO: rimozione authentication se abbandono app
                             }
 
 
@@ -153,11 +160,11 @@ public class RegistrationActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users");
         find=false;
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (username==data.getKey()) {
+                    if (username == data.getKey()) {
                         find=true;
                     }
                 }

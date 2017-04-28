@@ -27,7 +27,9 @@ public class ExpenseCreation extends AppCompatActivity implements View.OnClickLi
 
 
     public void onClick(View v){
-        EditText et_author = (EditText) findViewById(R.id.expense_author);
+        //TODO sistemare che l'autore è l'utente stesso
+        //TODO scrittura su firebase
+        String et_author = "me stesso";
         EditText et_name = (EditText)findViewById(R.id.expense_name);
         EditText et_description = (EditText)findViewById(R.id.expense_description);
         EditText et_import = (EditText)findViewById(R.id.expense_import);
@@ -40,13 +42,13 @@ public class ExpenseCreation extends AppCompatActivity implements View.OnClickLi
         ref.child("Price").setValue(et_import.getText().toString());
         ref.child("Description").setValue(et_description.getText().toString());
         ref.child("Name").setValue(et_name.getText().toString());
-        ref.child("Author").setValue(et_author.getText().toString());
+        ref.child("Author").setValue(et_author);
 
         ListView list = (ListView) findViewById(R.id.lv_expenses);
         ((BaseAdapter) list.getAdapter()).notifyDataSetChanged();
 
         Intent intent = new Intent();
-        intent.putExtra("author",et_author.getText().toString());
+        intent.putExtra("author",et_author);
         intent.putExtra("name",et_name.getText().toString());
         intent.putExtra("import",et_import.getText().toString());
         intent.putExtra("description",et_description.getText().toString());

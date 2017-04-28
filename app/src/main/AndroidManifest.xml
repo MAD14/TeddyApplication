@@ -40,7 +40,8 @@
         <activity
             android:name=".AddMembersToGroupActivity"
             android:label="@string/title_activity_add_members_to_group"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".InviteUsersToGroup"
             android:label="@string/title_activity_invite_users_to_group"

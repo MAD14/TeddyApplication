@@ -3,13 +3,14 @@
 
     <item
         android:id="@+id/navigation_group_section"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="@string/group_section" />
+        android:title="@string/group_section"
+        android:icon="@mipmap/group_icon"
+        />
 
     <item
         android:id="@+id/navigation_personal_section"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/personal_section" />
+        android:title="@string/personal_section"
+        android:icon="@mipmap/person_icon"/>
 
 
 </menu>

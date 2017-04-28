@@ -1,5 +1,6 @@
 package it.polito.teddyapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -103,13 +104,13 @@ public class InviteUsersToGroup extends AppCompatActivity{
 
     }
 
-//    public void onClickCompletedAction(View view) {
-//        // TODO: scrittura sul db
-//        // TODO: invio mails (ci penso io :) )
-//
-//        Toast.makeText(InviteUsersToGroup.this, "OK"+ emailsToBeSent.get(0),
-//                Toast.LENGTH_SHORT).show();
-//    }
+    public void onClickCompletedAction(View view) {
+        // TODO: scrittura sul db e aggiornamento cache dei gruppi
+        Toast.makeText(InviteUsersToGroup.this, "Group Created",
+                Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(InviteUsersToGroup.this,MainActivity.class);
+        startActivity(intent);
+    }
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
