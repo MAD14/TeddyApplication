@@ -6,6 +6,7 @@ package it.polito.teddyapplication;
 
 import java.util.Date;
 import java.util.Properties;
+
 import javax.activation.CommandMap;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -49,11 +50,11 @@ public class Mail extends javax.mail.Authenticator {
         _port = "465"; // default smtp port
         _sport = "465"; // default socketfactory port
 
-        _user = "madapplication14"; // username
+        _user = "madapplication14@gmail.com"; // username
         _pass = "mobilecourse17"; // password
         _from = "noreply@teddyapplication.com"; // email sent from
-        _subject = ""; // email subject
-        _body = ""; // email body
+        _subject = "tmp"; // email subject
+        _body = "tmp"; // email body
 
         _debuggable = false; // debug mode on or off - default off
         _auth = true; // smtp authentication - default on
@@ -81,7 +82,7 @@ public class Mail extends javax.mail.Authenticator {
         Properties props = _setProperties();
 
         // se c'è un utente con la password + se ci sono destinatari + se c'è un mittente + se c'è un oggetto + se c'è un messaggio
-        if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) {
+        if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")){
             Session session = Session.getInstance(props, this);
 
             //Multipurpose Internet Mail Extension
@@ -146,22 +147,13 @@ public class Mail extends javax.mail.Authenticator {
         }
 
         props.put("mail.smtp.port", _port);
+
         props.put("mail.smtp.socketFactory.port", _sport);
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.socketFactory.fallback", "false");
 
         return props;
     }
-
-    // the getters and setters
-    public String getBody() {
-        return _body;
-    }
-
-    public void setBody(String _body) {
-        this._body = _body;
-    }
-
 
 }
 

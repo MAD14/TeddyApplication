@@ -11,13 +11,22 @@ public class InviteMail extends Mail {
             "https://teddyapplication.com/welcome\n" +
             "Your MAD14 team";
     private String _body;
+    private String _subject;
+
+    private String[] _to;
 
     public InviteMail(){
         super();
         this._body=message;
+        this._subject="Teddy Application - Invite";
+
     }
 
     public String get_body() {
         return _body;
+    }
+
+    public void set_to(String[] _to) {
+        this._to = _to;
     }
 }

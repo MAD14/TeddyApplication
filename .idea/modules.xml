@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/TeddyApplicationGit1000.iml" filepath="$PROJECT_DIR$/TeddyApplicationGit1000.iml" />
       <module fileurl="file://$PROJECT_DIR$/TeddyApplicationRightOne.iml" filepath="$PROJECT_DIR$/TeddyApplicationRightOne.iml" />
       <module fileurl="file://$PROJECT_DIR$/TeddyApplication_FedeVersionLogin.iml" filepath="$PROJECT_DIR$/TeddyApplication_FedeVersionLogin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
