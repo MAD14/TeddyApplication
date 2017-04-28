@@ -40,6 +40,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String name,surname,username,email,password;
     private static final String TAG = RegistrationActivity.class.getName();
     private boolean find;
+    private boolean bo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
