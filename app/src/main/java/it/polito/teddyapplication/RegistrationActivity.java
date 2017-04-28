@@ -18,8 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * Created by Federico on 20/04/2017.
@@ -36,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText userView;
     private String name,surname,username,email,password;
     private static final String TAG = RegistrationActivity.class.getName();
+    private boolean find;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +85,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 username = userView.getText().toString();
 
-                // TODO Controllo validità username
-
                 email = emailView.getText().toString();
                 password = passView.getText().toString();
 
@@ -115,14 +117,23 @@ public class RegistrationActivity extends AppCompatActivity {
                             FirebaseDatabase database = FirebaseDatabase.getInstance();
                             DatabaseReference myRef = database.getReference("users");
 
-                            DatabaseReference ref = myRef.child(username);
-                            ref.child("Name").setValue(name);
-                            ref.child("Surname").setValue(surname);
-                            ref.child("Email").setValue(email);
-                            ref.child("Password").setValue(password);
-                            Toast.makeText(RegistrationActivity.this, "Added "+name+ " "+ surname,
-                                    Toast.LENGTH_SHORT).show();
-                            mainActivityCall();
+                            if(checkUserName()) {
+                                DatabaseReference ref = myRef.child(username);
+                                ref.child("Name").setValue(name);
+                                ref.child("Surname").setValue(surname);
+                                ref.child("Email").setValue(email);
+                                ref.child("Password").setValue(password);
+                                Toast.makeText(RegistrationActivity.this, "Added " + name + " " + surname,
+                                        Toast.LENGTH_SHORT).show();
+                                mainActivityCall();
+                            }
+                            else{
+                                Log.w(TAG, "createUserWithEmail:failure->username already in use", task.getException());
+                                Toast.makeText(RegistrationActivity.this, "Authentication failed: username already in use! Please select another one",
+                                        Toast.LENGTH_SHORT).show();
+
+
+                            }
 
 
                         } else {
@@ -138,6 +149,32 @@ public class RegistrationActivity extends AppCompatActivity {
                 });
     }
 
+    public boolean checkUserName() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users");
+        find=false;
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (username==data.getKey()) {
+                        find=true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("Failed to read value.", error.toException());
+                Toast.makeText(RegistrationActivity.this, "Failed to read value from DB!.",
+                        Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        });
+        return find;
+    }
 
 
 
